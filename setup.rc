@@ -1,0 +1,116 @@
+//+-------------------------------------------------------------------------
+//
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//
+//  File:       setup.rc
+//
+//--------------------------------------------------------------------------
+
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_ORIGINALFILENAME_STR "setup.exe"
+#define VER_FILETYPE             VFT_APP
+#define VER_FILESUBTYPE          VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR  "Windows\256 Installer Internet Download Bootstrap"
+#define VER_INTERNALNAME_STR     "setup.exe"
+
+
+#include <common.ver>
+#include "resource.h"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+IDI_INSTALLER           icon    DISCARDABLE     "setup.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_PROGRESS DIALOG 150, 150, 253, 75
+STYLE DS_MODALFRAME | DS_NOIDLEMSG | WS_POPUP | WS_CAPTION
+//FONT 9, "MS Shell Dlg"
+FONT 9, "ＭＳ Ｐゴシック"
+{
+ ICON         IDI_INSTALLER,IDC_DOWNLOAD_ICON,7,7,20,20
+ PUSHBUTTON   "", IDC_DOWNLOAD_CANCEL, 196, 54,  50, 14
+ LTEXT        "" ,IDC_DOWNLOAD_BANNER, 31, 7, 215, 28
+ CONTROL      "" ,IDC_DOWNLOAD_PROGRESSBAR,"msctls_progress32", WS_BORDER, 7, 56, 182, 10
+ LTEXT        "" ,IDC_DOWNLOAD_ACTIONTEXT,  7,  40, 339, 12
+}
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+/*
+    IDS_APP_TITLE              "Windows Installer Installation Wrapper"
+    IDS_OUTOFMEM               "Out of Memory"
+    IDS_NOMSI                  "Setup was unable to find the msi package or patch '%1'."
+    IDS_CANCEL                 "Cancel"
+    IDS_MISSING_RESOURCE       "The required resource '%s' is missing."
+    IDS_BANNER_TEXT            "Please wait while '%s' is downloaded..."
+    IDS_DEFAULT_PRODUCT        "the product"
+    IDS_DOWNLOADING_PACKAGE    "Downloading package '%s'"
+    IDS_VALIDATING_SIGNATURE   "Verifying digital signature of '%s'"
+    IDS_REQUIRES_NEWER_VERSION "Setup was unable to upgrade the Windows Installer to a version that supports schema '%s'."
+    IDS_NO_WINTRUST            "This version of Windows does not support digital signatures."
+    IDS_UNTRUSTED              "Installation failed.  '%1' is not trusted."
+    IDS_INVALID_PATH           "The path '%1' is invalid."
+    IDS_USER_CANCELLED         "Setup was cancelled"
+    IDS_INVALID_VER_STR        "'%s' is an invalid Msi version. Be sure that it is numeric and is at least '%d'."
+    IDS_REQUIRES_ADMIN_PRIV    "Admin priviledges are required for upgrading the Windows Installer."
+    IDS_DOWNLOADING_UPDATE     "Downloading Windows Installer update executable"
+    IDS_NOUPDATE               "Setup was unable to find the update file '%1'."
+    IDS_FAILED_TO_UPGRADE_MSI  "Setup was unable to upgrade the Windows Installer."
+    IDS_REBOOT_REQUIRED        "You must restart your system for the configuration changes to take effect. Click Yes to restart now or No if you plan to manually restart later."
+    IDS_INCORRECT_UPDATE       "The provided update package '%1' is invalid."
+    IDS_INSTALL_ERROR          "An error occured installing the package.  Windows Installer returned '%d'."
+    IDS_ALLOW_MSI_UPDATE       "This package requires a newer version of the Windows Installer. Do you want to update the version of the Windows Installer on your system?"
+    IDS_INVALID_OPERATION      "The setup was authored with an incorrect operation resource '%s' and cannot continue."
+    IDS_USAGE                  "Usage:\n   /? :  Show this dialog.\n   /a :  Perform an administrative install.\n   /a <full path to existing administrative install> :  Patch an existing administrative install.\n   /v <full path to file> :  Verify signature on file.\n"
+    IDS_OS_NOT_SUPPORTED       "This platform can not support the version of Windows Installer you are attempting to install."
+    IDS_INTERNAL_ERROR         "An irrecoverable internal error occured."
+*/
+    IDS_APP_TITLE              "Windows Installer インストールラッパー"
+    IDS_OUTOFMEM               "メモリが不足しています"
+    IDS_NOMSI                  "セットアップは msi パッケージかパッチ '%1' を見つけることができませんでした。"
+    IDS_CANCEL                 "キャンセル"
+    IDS_MISSING_RESOURCE       "必要なリソース '%s' は欠けています。"
+    IDS_BANNER_TEXT            "'%s' をダウンロードしている間、待ってください…"
+    IDS_DEFAULT_PRODUCT        "プロダクト"
+    IDS_DOWNLOADING_PACKAGE    "パッケージ '%s' をダウンロードしています"
+    IDS_VALIDATING_SIGNATURE   "'%s' のデジタル署名についてベリファイしています"
+    IDS_REQUIRES_NEWER_VERSION "セットアップはスキーマ '%s' をサポートするバージョンに Windows Installer をアップグレードすることができませんでした。"
+    IDS_NO_WINTRUST            "Windows のこのバージョンはデジタル署名をサポートしません。"
+    IDS_UNTRUSTED              "インストールは失敗しました。'%1' は信頼できません。"
+    IDS_INVALID_PATH           "パス '%1' は無効です。"
+    IDS_USER_CANCELLED         "セットアップは中止されました"
+    IDS_INVALID_VER_STR        "'%s' は無効の Msi バージョンです。それが数値であり、少なくとも '%d' であると確認してください。"
+    IDS_REQUIRES_ADMIN_PRIV    "管理者特権が、Windows Installer をアップグレードさせるのに必要です。"
+    IDS_DOWNLOADING_UPDATE     "実行可能な Windows Installer アップデートをダウンロードしています"
+    IDS_NOUPDATE               "セットアップはアップデートファイル '%1' を見つけることができませんでした。"
+    IDS_FAILED_TO_UPGRADE_MSI  "セットアップは Windows Installer をアップグレードさせることができませんでした。"
+    IDS_REBOOT_REQUIRED        "あなたは、構成の変更が反映されるようにシステムを再起動しなければなりません。直ちに再起動するなら「はい」を、後で手動で再起動するなら「いいえ」をクリックしてください。"
+    IDS_INCORRECT_UPDATE       "提供されたアップデートパッケージ '%1' は無効です。"
+    IDS_INSTALL_ERROR          "パッケージのインストール中にエラーが起きました。Windows Installer は '%d' を返しました。"
+    IDS_ALLOW_MSI_UPDATE       "このパッケージは Windows Installer の、より新しいバージョンを必要とします。あなたはあなたのシステム上で Windows Installer のバージョンをアップデートしたいですか？"
+    IDS_INVALID_OPERATION      "セットアップは、'%s' という正しくないなオペレーションリソースで書かれていて、続けることができません。"
+    IDS_USAGE                  "用法:\n   /? :  このダイアログを表示。\n   /a :  管理者インストールを実行。\n   /a <既存の管理者インストールへのフルパス> :  既存の管理者インストールにパッチ。\n   /v <ファイルへのフルパス> :  ファイル上の署名をベリファイ。\n"
+    IDS_OS_NOT_SUPPORTED       "このプラットホームはあなたがインストールしようとしている Windows Installer のバージョンをサポートすることができません。"
+    IDS_INTERNAL_ERROR         "回復できない内部エラーが起きました。"
+    IDS_UPGRADE_MSI_INFOMSG    "アップデートする場合、「インストールを続行するには次のアプリケーションを終了する必要があります」と表示され、リストに「Windows Installer インストールラッパー」が表示される場合があります。その際は、「Windows Installer インストールラッパー」以外のアプリケーションを終了し、「無視」をクリックしてください。"
+    IDS_UNINSTALL_OLDPRODUCT   "以前のバージョンの %s をアンインストールします。"
+    IDS_TERMINATE_PRODUCT      "現在実行中の %s を終了します。"
+    IDS_ALLOW_JET_UPDATE       "このパッケージは Jet 4.0 データベース エンジン の、より新しいバージョンを必要とします。あなたはあなたのシステム上で Jet 4.0 データベース エンジン のバージョンをアップデートしたいですか？"
+    IDS_DOWNLOADING_JET        "実行可能な Jet 4.0 アップデートをダウンロードしています"
+    IDS_NOJET                  "セットアップはアップデートファイル '%1' を見つけることができませんでした。"
+    IDS_REBOOT_SETUP_REQUIRED  "システムを再起動して、アンインストール時に使用中だったファイルを削除しなければなりません。直ちに再起動しますか？（再起動後、再度 setup.exe が実行されます。）"
+END
